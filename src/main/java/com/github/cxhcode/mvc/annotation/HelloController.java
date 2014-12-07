@@ -5,6 +5,9 @@ import com.github.cxhcode.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  * Created by jack on 14-12-6.
  */
@@ -42,4 +45,32 @@ public class HelloController {
         System.out.println(user);
     }
 
+    @RequestMapping("responseBody")
+    @ResponseBody
+    public User responseBody() {
+        User user = new User();
+        Book book = new Book();
+        book.setName("java core");
+        book.setId(1);
+        book.setPublication(new Date());
+        ArrayList<Book> books = new ArrayList<Book>();
+        books.add(book);
+        user.setId(1);
+        user.setName("jack");
+        user.setPassword("123asd");
+        user.setBookList(books);
+        return user;
+    }
+
+    @RequestMapping("cookieValue")
+    public String cookieValue(@CookieValue("JSESSIONID") String jsessionId) {
+        System.out.println(jsessionId);
+        return "hello";
+    }
+
+    @RequestMapping("requestHeader")
+    public String requestHeader(@RequestHeader String accept) {
+        System.out.println(accept);
+        return "hello";
+    }
 }
